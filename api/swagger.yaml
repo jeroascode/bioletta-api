@@ -33,6 +33,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response400'
+        404:
+          description: File path not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
   /biometric/v1/voice/recognize:
     post:
       summary: User validation
@@ -52,8 +58,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response200Recognize'
+        404:
+          description: File path not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response404'
         422:
-          description: File not found Error or one or more fields are missing
+          description: File error or one or more fields are missing
           content:
             application/json:
               schema:
@@ -79,9 +91,14 @@ components:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: string
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: "Jerson"
+                  enrolled:
+                    type: string
+                    example: "true"
         message:
           type: string
           example: "Biometric Voice enroll completed successfully"
@@ -95,9 +112,11 @@ components:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: string
+                type: object
+                properties:
+                  enrolled:
+                    type: string
+                    example: "false"
         message:
           type: string
           example: "Unable to save the user into the database"
@@ -119,15 +138,32 @@ components:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: string
+                type: object
+                properties:
+                  userRecognize:
+                    type: string
+                    example: "Jerson"
+                  recognize:
+                    type: string
+                    example: "true"
         message:
           type: string
           example: "Biometric Voice recognize completed successfully"
         code:
           type: int
           example: 200
+    Response404:
+      type: object
+      properties:
+        result:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Audio file path not found"
+              code:
+                type: int
+                example: 404
     Response422:
       type: object
       properties:
@@ -135,9 +171,11 @@ components:
             type: object
             properties:
               data:
-                type: array
-                items:
-                  type: string
+                type: object
+                properties:
+                  recognize:
+                    type: string
+                    example: "false"
         message:
           type: string
           example: "Error in Biometric Voice recognize: Error: FileNotFoundError: [Errno 2] No such file or directory: {path}"

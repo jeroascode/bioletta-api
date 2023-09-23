@@ -10,8 +10,8 @@ chai.use(chaiHttp)
 describe('Send enroll', () => {
     it('Do user registration success', (done) => {
         const user = {
-            username: 'Jerson',
-            filePath: 'C:/Users/GSE/Downloads/Audios/Jerson/jr-01.wav'
+            username: 'Cristiano Ronaldo',
+            filePath: 'bioletta/Cristiano Ronaldo/final_record.wav'
         }
         chai.request(server)
             .post('/biometric/v1/voice/enroll')
@@ -26,8 +26,8 @@ describe('Send enroll', () => {
 describe('Send enroll', () => {
     it('Do user registration not success', (done) => {
         const user = {
-            username: 'Jerson',
-            filePath: 'C:/Users/GSE/Downloads/Audios/Jerson/jr-01.wava'
+            username: 'Cristiano Ronaldo',
+            filePath: 'bioletta/Cristiano Ronaldo/final_record.wava'
         }
         chai.request(server)
             .post('/biometric/v1/voice/enroll')
@@ -42,7 +42,7 @@ describe('Send enroll', () => {
 describe('Send recognize', () => {
     it('Do user registration success', (done) => {
         const user = {
-            filePath: 'C:/Users/GSE/Downloads/Audios/Jerson/jr-01.wav'
+            filePath: 'bioletta/Cristiano Ronaldo/final_record.wav'
         }
         chai.request(server)
             .post('/biometric/v1/voice/recognize')
@@ -57,7 +57,7 @@ describe('Send recognize', () => {
 describe('Send recognize', () => {
     it('Do user registration not success', (done) => {
         const user = {
-            filePath: 'C:/Users/GSE/Downloads/Audios/Jerson/jr-01.wava'
+            filePath: 'bioletta/Cristiano Ronaldo/final_record.wava'
         }
         chai.request(server)
             .post('/biometric/v1/voice/recognize')
