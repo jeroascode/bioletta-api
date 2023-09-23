@@ -6,7 +6,10 @@ exports.sendEnroll = async (req) => {
     const { username, filePath } = req.body
     const currentPath = await pathResponse.enrollPathResponse(filePath, username)
     if (currentPath.code >= 400) return { message: currentPath.message, code: currentPath.code }
-    let options = { args: ['enroll', currentPath.data.path, username] }
+    let options = {
+        pythonPath: 'python',
+        args: ['enroll', currentPath.data.path, username]
+    }
     return await PythonShell.run('voice_auth.py', options).then((res) => {
         const resMessage = res[3]
         if (resMessage >= 400) return { message: 'Unable to enroll the user, check the file format, only WAV and FLAC files allowed', code: 400 }
@@ -21,7 +24,10 @@ exports.sendRecognize = async (req) => {
     const { filePath } = req.body;
     const currentPath = await pathResponse.recognizePathResponse(filePath)
     if (currentPath.code >= 400) return { message: currentPath.message, code: currentPath.code }
-    let options = { args: ['recognize', currentPath.data.path] }
+    let options = {
+        pythonPath: 'python',
+        args: ['recognize', currentPath.data.path]
+    }
     return await PythonShell.run('voice_auth.py', options).then((res) => {
         const resMessage = res[3]
         if (resMessage >= 400) return { message: 'Unable to enroll the user, check the file format, only WAV and FLAC files allowed', code: 400 }
