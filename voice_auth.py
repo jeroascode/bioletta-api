@@ -1,20 +1,24 @@
-#IMPORT SYSTEM FILES
+import argparse
+import scipy.io.wavfile as wavfile
+import traceback as tb
 import os
 import sys
-import warnings
-import logging
 import numpy as np
 import pandas as pd
-import parameters as p
-from scipy.spatial.distance import euclidean
+from scipy.spatial.distance import cdist, euclidean, cosine 
+import warnings
 from keras.models import load_model
+import logging
 logging.basicConfig(level=logging.ERROR)
 warnings.filterwarnings("ignore")
+import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 #IMPORT USER-DEFINED FUNCTIONS
 from feature_extraction import get_embedding, get_embeddings_from_list_file
+from preprocess import get_fft_spectrum
+import parameters as p
 
 def enroll(name,file):
     """Enroll a user with an audio file
