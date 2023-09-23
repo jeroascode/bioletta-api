@@ -5,7 +5,6 @@ __pycache__/
 node_modules
 res
 .env
-config/config.js
 data/audios
 
 package-lock.json
