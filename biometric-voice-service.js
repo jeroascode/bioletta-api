@@ -3,13 +3,13 @@ const app = express()
 
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./api/swagger.yaml');
+const swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./api/swagger.yaml')
 
-const port = 5555
+const { config: configJson } = require('./config/config')
 
-const user = require('./firebase/config')
+const port = configJson.port
 
 app.set('json spaces', 2)
 app.use(bodyParser.json({ limit: '5000mb' }))
