@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: Biometric Voice API
+  description: Service responsible for voice user authentication.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5555
+    description: api local
+
+paths:
+  /biometric/v1/voice/enroll:
+    post:
+      summary: User auth
+      requestBody:
+        description: Allows user registration
+        content:
+          'application/json':
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Enroll'
+      tags:
+        - Enroll
+      responses:
+        200:
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200Enroll'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response400'
+  /biometric/v1/voice/recognize:
+    post:
+      summary: User validation
+      requestBody:
+        description: Allows to verify the user's identity.
+        content:
+          'application/json':
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Recognize'
+      tags:
+        - Recognize
+      responses:
+        200:
+          description: Successfull request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response200Recognize'
+        422:
+          description: File not found Error or one or more fields are missing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response422'
+components:
+  schemas:
+    Enroll:
+      type: object
+      required:
+        - username
+        - filePath
+      properties:
+        username:
+          type: string
+          default: "Username"
+        filePath:
+          type: string
+          default: "C:/Users/GSE/Downloads/Audios/Username/jr-01.wav"
+    Response200Enroll:
+      type: object
+      properties:
+        result:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: string
+        message:
+          type: string
+          example: "Biometric Voice enroll completed successfully"
+        code:
+          type: int
+          example: 200
+    Response400:
+      type: object
+      properties:
+        result:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: string
+        message:
+          type: string
+          example: "Unable to save the user into the database"
+        code:
+          type: int
+          example: 400
+    Recognize:
+      type: object
+      required:
+        - filePath
+      properties:       
+        filePath:
+          type: string
+          default: "C:/Users/GSE/Downloads/Audios/Username/jr-01.wav"
+    Response200Recognize:
+      type: object
+      properties:
+        result:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: string
+        message:
+          type: string
+          example: "Biometric Voice recognize completed successfully"
+        code:
+          type: int
+          example: 200
+    Response422:
+      type: object
+      properties:
+        result:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: string
+        message:
+          type: string
+          example: "Error in Biometric Voice recognize: Error: FileNotFoundError: [Errno 2] No such file or directory: {path}"
+        code:
+          type: int
+          example: 422
