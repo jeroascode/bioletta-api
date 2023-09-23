@@ -1,11 +1,7 @@
-import argparse
-import scipy.io.wavfile as wavfile
-import traceback as tb
 import os
 import sys
 import numpy as np
-import pandas as pd
-from scipy.spatial.distance import cdist, euclidean, cosine 
+from scipy.spatial.distance import euclidean 
 import warnings
 from keras.models import load_model
 import logging
@@ -17,7 +13,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 #IMPORT USER-DEFINED FUNCTIONS
 from feature_extraction import get_embedding, get_embeddings_from_list_file
-from preprocess import get_fft_spectrum
 import parameters as p
 
 def enroll(name,file):
